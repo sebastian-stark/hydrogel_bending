@@ -472,7 +472,7 @@ public:
 	const
 	{
 
-		const typename hp::DoFHandler<spacedim>::cell_iterator current_cell = input_data.template get_cell<hp::DoFHandler<spacedim>>();
+		const typename DoFHandler<spacedim>::cell_iterator current_cell = input_data.template get_cell<spacedim>();
 		const unsigned int mat_id = current_cell->material_id();
 
 		const unsigned int N = input_data.solution_gradients.size();
@@ -2278,7 +2278,7 @@ int main(int argc, char **argv)
 
 	Utilities::MPI::MPI_InitFinalize mpi_initialization(argc, argv, 1);
 
-	const unsigned int m_t_max = 6;	// maximum number of refinements in time for convergence study
+	const unsigned int m_t_max = 0;	// maximum number of refinements in time for convergence study
 	const unsigned int m_t = 1;		// number of refinements in time to be used for convergence study in space
 
 	// polynomial degrees of finite elements to be studied, together with maxmimum number of refinements in space to be used for spatial convergence study and number of refinements in space to be used for
@@ -2334,7 +2334,7 @@ int main(int argc, char **argv)
 			const string file_name_ref_h	= "results/results" + variant_string_h + "_ref.dat";			// file where reference solution is stored
 
 			// generate reference solution
-			result_data_ref = solve(m_t, get<1>(degree_m_h_max_m_h), method.first, method.second, get<0>(degree_m_h_max_m_h), file_name_ref_h, true, get<1>(degree_m_h_max_m_h), true);
+			result_data_ref = solve(m_t, get<1>(degree_m_h_max_m_h), method.first, method.second, get<0>(degree_m_h_max_m_h), file_name_ref_h, true, get<1>(degree_m_h_max_m_h), false);
 
 			// clear file
 			FILE* printout_h = fopen(file_name_res_h.c_str(),"w");
